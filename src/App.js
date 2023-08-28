@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import generateSyntheticData from './syntheticDataGenerator';
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
 
 function App() {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerateData = () => {
+    setIsGenerating(true);
+    const syntheticData = generateSyntheticData();
+  
+    const titlesCSV = Papa.unparse(syntheticData.titles);
+    const creditsCSV = Papa.unparse(syntheticData.credits);
+  
+    const titlesBlob = new Blob([titlesCSV], { type: 'text/csv;charset=utf-8;' });
+    const creditsBlob = new Blob([creditsCSV], { type: 'text/csv;charset=utf-8;' });
+  
+    saveAs(titlesBlob, 'titles.csv');
+    saveAs(creditsBlob, 'credits.csv');
+  
+    setIsGenerating(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={handleGenerateData} disabled={isGenerating}>
+        Generate Synthetic Data
+      </button>
+      {isGenerating && <p>Generating data...</p>}
     </div>
   );
 }
