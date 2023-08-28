@@ -6,17 +6,22 @@ function generateSyntheticData() {
     credits: [],
   };
 
+  // Array of age certifications for more comprehensive testing
+  const ageCertifications = [
+    'G', 'PG', 'PG-13', 'R', 'NC-17', 'U', 'U/A', 'A', 'S', 
+    'AL', '6', '9', '12', '12A', '15', '18', '18R', 'R18', 'R21', 
+    'M', 'MA15+', 'R16', 'R18+', 'X18', 'T', 'E', 'E10+', 'EC', 'C',
+    'CA', 'GP', 'M/PG', 'TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 
+    'TV-MA'
+  ];
+
   for (let i = 1; i <= 120; i++) {
     const title = {
       id: i,
       title: faker.random.words(),
       description: faker.lorem.paragraph(),
       release_year: faker.date.past().getFullYear(),
-      age_certification: faker.random.arrayElement(['G', 'PG', 'PG-13', 'R', 'NC-17', 'U', 'U/A', 'A', 'S', 
-                                                    'AL', '6', '9', '12', '12A', '15', '18', '18R', 'R18', 'R21', 
-                                                    'M', 'MA15+', 'R16', 'R18+', 'X18', 'T', 'E', 'E10+', 'EC', 'C',
-                                                    'CA', 'GP', 'M/PG', 'TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 
-                                                    'TV-MA']),
+      age_certification: faker.random.arrayElement(ageCertifications),
       runtime: faker.random.number({ min: 60, max: 180 }),
       genres: [faker.random.word(), faker.random.word()],
       production_country: faker.address.countryCode(),
